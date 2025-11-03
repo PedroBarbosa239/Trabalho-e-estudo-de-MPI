@@ -13,8 +13,11 @@
 #   Requisitos:
 #    -- Python 3.12
 #    -- pip install mpi4py
-#    -- mpi microsoft (realizar download)
+#    -- ms mpi microsoft (realizar download)
 #
+#   Rodar no poweshell com comando
+#   mpiexec -n 2 python script.py
+
 
 
 from mpi4py import MPI
@@ -31,6 +34,8 @@ if size != 2:
     MPI.Finalize()
     exit()
 
+#print("Pass 1")
+
 if rank == 0:
     print(f"{'Tipo':<10}{'n':>10}{'Tamanho (MB)':>15}{'Tempo (s)':>15}{'Taxa (MB/s)':>15}")
 
@@ -43,13 +48,15 @@ for i in range(20):
     if rank == 0:
         comm.Send([data, MPI.DOUBLE], dest=1, tag=0)
         comm.Recv([data, MPI.DOUBLE], source=1, tag=0)
+        
+#        print("Pass 2")
     elif rank == 1:
         comm.Recv([data, MPI.DOUBLE], source=0, tag=0)
         comm.Send([data, MPI.DOUBLE], dest=0, tag=0)
 
     end = MPI.Wtime()  
     sub = end - start
-
+#        print("Pass 3")
     bytes_transmitidos = 2 * n * data.itemsize 
     tamanho_mb = (n * data.itemsize) / (1024 * 1024)
     taxa = (bytes_transmitidos / (1024 * 1024)) / sub
