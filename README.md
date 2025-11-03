@@ -13,7 +13,7 @@ O código envia e recebe arrays de `double` de tamanhos crescentes entre dois pr
 
 ## Conteúdo do repositório
 
-- `pingpong.py` — código principal do experimento em Python usando `mpi4py`
+- `script.py` — código principal do experimento em Python usando `mpi4py`
 - `README.md` — instruções e explicações sobre o trabalho
 
 ---
